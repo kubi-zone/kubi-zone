@@ -87,7 +87,7 @@ jobs:
       - name: Install cargo-docs-rs
         uses: dtolnay/install@cargo-docs-rs
       - name: cargo docs-rs
-        run: cargo docs-rs
+        run: cargo metadata --no-deps | jq '.packages[].name' | xargs -n1 cargo docs-rs -p
   hack:
     # cargo-hack checks combinations of feature flags to ensure that features are all additive
     # which is required for feature unification
@@ -104,7 +104,9 @@ jobs:
       # intentionally no target specifier; see https://github.com/jonhoo/rust-ci-conf/pull/4
       # --feature-powerset runs for every combination of features
       - name: cargo hack
-        run: cargo hack --feature-powerset check
+        env:
+          kubernetes_versions: v1_27,v1_28,v1_29,v1_30
+        run: cargo hack --feature-powerset --mutually-exclusive-features $kubernetes_versions --at-least-one-of $kubernetes_versions check
   msrv:
     # check that we can build using the minimal rust version that is specified by this crate
     runs-on: ubuntu-latest
