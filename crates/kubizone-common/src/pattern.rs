@@ -4,10 +4,10 @@ use std::{
 };
 
 use schemars::{JsonSchema, Schema, SchemaGenerator};
-use serde::{de::Error, Deserialize, Serialize};
+use serde::{Deserialize, Serialize, de::Error};
 use thiserror::Error;
 
-use crate::{segment::DomainSegment, FullyQualifiedDomainName};
+use crate::{FullyQualifiedDomainName, segment::DomainSegment};
 
 #[derive(Error, Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum PatternError {}
@@ -112,8 +112,8 @@ impl JsonSchema for Pattern {
         <String as schemars::JsonSchema>::schema_name()
     }
 
-    fn json_schema(gen: &mut SchemaGenerator) -> Schema {
-        <String as schemars::JsonSchema>::json_schema(gen)
+    fn json_schema(generator: &mut SchemaGenerator) -> Schema {
+        <String as schemars::JsonSchema>::json_schema(generator)
     }
 }
 
@@ -266,43 +266,53 @@ impl AsRef<str> for PatternSegment {
 #[cfg(test)]
 mod tests {
     use crate::{
-        error::PatternSegmentError, pattern::PatternSegment, segment::DomainSegment,
-        FullyQualifiedDomainName, Pattern,
+        FullyQualifiedDomainName, Pattern, error::PatternSegmentError, pattern::PatternSegment,
+        segment::DomainSegment,
     };
 
     #[test]
     fn literal_matches() {
-        assert!(PatternSegment::try_from("example")
-            .unwrap()
-            .matches(&DomainSegment::try_from("example").unwrap()))
+        assert!(
+            PatternSegment::try_from("example")
+                .unwrap()
+                .matches(&DomainSegment::try_from("example").unwrap())
+        )
     }
 
     #[test]
     fn wildcard() {
-        assert!(PatternSegment::try_from("*")
-            .unwrap()
-            .matches(&DomainSegment::try_from("example").unwrap()))
+        assert!(
+            PatternSegment::try_from("*")
+                .unwrap()
+                .matches(&DomainSegment::try_from("example").unwrap())
+        )
     }
 
     #[test]
     fn leading_wildcard() {
-        assert!(PatternSegment::try_from("*ample")
-            .unwrap()
-            .matches(&DomainSegment::try_from("example").unwrap()))
+        assert!(
+            PatternSegment::try_from("*ample")
+                .unwrap()
+                .matches(&DomainSegment::try_from("example").unwrap())
+        )
     }
 
     #[test]
     fn trailing_wildcard() {
-        assert!(PatternSegment::try_from("examp*")
-            .unwrap()
-            .matches(&DomainSegment::try_from("example").unwrap()))
+        assert!(
+            PatternSegment::try_from("examp*")
+                .unwrap()
+                .matches(&DomainSegment::try_from("example").unwrap())
+        )
     }
 
     #[test]
     fn splitting_wildcard() {
-        assert!(PatternSegment::try_from("ex*le")
-            .unwrap()
-            .matches(&DomainSegment::try_from("example").unwrap()))
+        assert!(
+            PatternSegment::try_from("ex*le")
+                .unwrap()
+                .matches(&DomainSegment::try_from("example").unwrap())
+        )
     }
 
     #[test]
@@ -315,16 +325,20 @@ mod tests {
 
     #[test]
     fn simple_pattern_match() {
-        assert!(Pattern::try_from("*.example.org")
-            .unwrap()
-            .matches(&FullyQualifiedDomainName::try_from("www.example.org.").unwrap()));
+        assert!(
+            Pattern::try_from("*.example.org")
+                .unwrap()
+                .matches(&FullyQualifiedDomainName::try_from("www.example.org.").unwrap())
+        );
     }
 
     #[test]
     fn longer_pattern_than_domain() {
-        assert!(!Pattern::try_from("*.*.example.org")
-            .unwrap()
-            .matches(&FullyQualifiedDomainName::try_from("www.example.org.").unwrap()));
+        assert!(
+            !Pattern::try_from("*.*.example.org")
+                .unwrap()
+                .matches(&FullyQualifiedDomainName::try_from("www.example.org.").unwrap())
+        );
     }
 
     #[test]
@@ -339,13 +353,17 @@ mod tests {
         let pattern = Pattern::try_from("dev*.example.org").unwrap();
 
         assert!(pattern.matches(&FullyQualifiedDomainName::try_from("dev.example.org.").unwrap()));
-        assert!(pattern.matches(&FullyQualifiedDomainName::try_from("dev-1.example.org.").unwrap()));
+        assert!(
+            pattern.matches(&FullyQualifiedDomainName::try_from("dev-1.example.org.").unwrap())
+        );
         assert!(
             pattern.matches(&FullyQualifiedDomainName::try_from("dev-hello.example.org.").unwrap())
         );
         assert!(!pattern.matches(&FullyQualifiedDomainName::try_from("de.example.org.").unwrap()));
-        assert!(!pattern
-            .matches(&FullyQualifiedDomainName::try_from("www.dev-1.example.org.").unwrap()));
+        assert!(
+            !pattern
+                .matches(&FullyQualifiedDomainName::try_from("www.dev-1.example.org.").unwrap())
+        );
     }
 
     #[test]
@@ -368,8 +386,10 @@ mod tests {
 
         assert!(!pattern.matches(&domain));
 
-        assert!(pattern
-            .with_origin(&FullyQualifiedDomainName::try_from("org.").unwrap())
-            .matches(&FullyQualifiedDomainName::try_from("example.org.").unwrap()));
+        assert!(
+            pattern
+                .with_origin(&FullyQualifiedDomainName::try_from("org.").unwrap())
+                .matches(&FullyQualifiedDomainName::try_from("example.org.").unwrap())
+        );
     }
 }

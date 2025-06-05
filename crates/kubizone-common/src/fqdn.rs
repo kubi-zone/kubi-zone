@@ -5,12 +5,12 @@ use std::{
 };
 
 use schemars::{JsonSchema, Schema, SchemaGenerator};
-use serde::{de::Error, Deserialize, Serialize};
+use serde::{Deserialize, Serialize, de::Error};
 use thiserror::Error;
 
 use crate::{
-    segment::{DomainSegment, DomainSegmentError},
     PartiallyQualifiedDomainName,
+    segment::{DomainSegment, DomainSegmentError},
 };
 
 /// Produced when attempting to construct a [`FullyQualifiedDomainName`]
@@ -147,8 +147,8 @@ impl JsonSchema for FullyQualifiedDomainName {
         <String as schemars::JsonSchema>::schema_name()
     }
 
-    fn json_schema(gen: &mut SchemaGenerator) -> Schema {
-        <String as schemars::JsonSchema>::json_schema(gen)
+    fn json_schema(generator: &mut SchemaGenerator) -> Schema {
+        <String as schemars::JsonSchema>::json_schema(generator)
     }
 }
 
@@ -206,8 +206,8 @@ impl Sub for FullyQualifiedDomainName {
 #[cfg(test)]
 mod test {
     use crate::{
-        fqdn::FullyQualifiedDomainNameError, segment::DomainSegment, FullyQualifiedDomainName,
-        PartiallyQualifiedDomainName,
+        FullyQualifiedDomainName, PartiallyQualifiedDomainName,
+        fqdn::FullyQualifiedDomainNameError, segment::DomainSegment,
     };
 
     #[test]

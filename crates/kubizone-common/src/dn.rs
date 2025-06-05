@@ -5,9 +5,9 @@ use serde::{Deserialize, Serialize};
 use thiserror::Error;
 
 use crate::{
+    FullyQualifiedDomainName, PartiallyQualifiedDomainName,
     fqdn::FullyQualifiedDomainNameError,
     segment::{DomainSegment, DomainSegmentError},
-    FullyQualifiedDomainName, PartiallyQualifiedDomainName,
 };
 
 /// Either a [`FullyQualifiedDomainName`] or a [`PartiallyQualifiedDomainName`].
@@ -204,8 +204,8 @@ impl JsonSchema for DomainName {
         <String as JsonSchema>::schema_name()
     }
 
-    fn json_schema(gen: &mut SchemaGenerator) -> Schema {
-        <String as JsonSchema>::json_schema(gen)
+    fn json_schema(generator: &mut SchemaGenerator) -> Schema {
+        <String as JsonSchema>::json_schema(generator)
     }
 }
 
