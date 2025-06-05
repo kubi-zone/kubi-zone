@@ -2,6 +2,7 @@
 name = "kubizone-common"
 version = "0.15.0"
 edition = "2024"
+rust-version = "1.85.1"
 
 authors = ["Mathias Pius Stage <contact@pius.email>"]
 description = "Typed Rust structures for representing partially and fully qualified domain names."
