@@ -19,3 +19,7 @@ serde.workspace = true
 
 [dev-dependencies]
 serde_yaml.workspace = true
+
+[target.'cfg(any())'.dependencies]
+# schemars --> serde_json --> memchr>=2, actually requires 2.7.4
+memchr = { version = ">=2.7.4", optional = true }
