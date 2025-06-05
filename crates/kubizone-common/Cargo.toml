@@ -1,0 +1,20 @@
+[package]
+name = "kubizone-common"
+version = "0.15.0"
+edition = "2024"
+
+authors = ["Mathias Pius Stage <contact@pius.email>"]
+description = "Typed Rust structures for representing partially and fully qualified domain names."
+keywords = ["kubernetes", "kubizone", "dns"]
+
+repository = "https://github.com/kubi-zone/kubi-zone"
+license = "MIT"
+readme = "README.md"
+
+[dependencies]
+thiserror = "2.0.12"
+schemars.workspace = true
+serde.workspace = true
+
+[dev-dependencies]
+serde_yaml.workspace = true

@@ -1,0 +1,1 @@
+Typed Rust structures for representing partially and fully qualified domain names.
