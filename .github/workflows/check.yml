@@ -104,9 +104,9 @@ jobs:
       # intentionally no target specifier; see https://github.com/jonhoo/rust-ci-conf/pull/4
       # --feature-powerset runs for every combination of features
       - name: cargo hack
-        env:
-          kubernetes_versions: v1_27,v1_28,v1_29,v1_30
-        run: cargo hack --feature-powerset --mutually-exclusive-features $kubernetes_versions --at-least-one-of $kubernetes_versions check
+        run: |
+          kubernetes_versions=$(cargo metadata --no-deps | jq -r '[.packages[].features] | add | to_entries | map(select(.value[] | startswith("k8s"))) | map(.key) | join(",")')
+          cargo hack --feature-powerset --mutually-exclusive-features $kubernetes_versions --at-least-one-of $kubernetes_versions check
   msrv:
     # check that we can build using the minimal rust version that is specified by this crate
     runs-on: ubuntu-latest
