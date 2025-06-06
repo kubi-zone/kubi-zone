@@ -4,6 +4,7 @@ members = ["crates/kubizone-common", "crates/kubizone-crds"]
 
 [workspace.dependencies]
 kubizone-common = { version = "0.15.0", path = "crates/kubizone-common" }
+kubizone-crds = { version = "0.14.0", path = "crates/kubizone-crds" }
 
 # Logging
 thiserror = "2.0.12"
