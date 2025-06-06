@@ -1,9 +1,6 @@
-use std::{
-    borrow::Cow,
-    fmt::{Display, Write},
-};
+use std::fmt::{Display, Write};
 
-use schemars::{JsonSchema, Schema, SchemaGenerator};
+use schemars::{JsonSchema, SchemaGenerator, schema::Schema};
 use serde::{Deserialize, Serialize, de::Error};
 use thiserror::Error;
 
@@ -108,7 +105,7 @@ impl Display for Pattern {
 }
 
 impl JsonSchema for Pattern {
-    fn schema_name() -> Cow<'static, str> {
+    fn schema_name() -> String {
         <String as schemars::JsonSchema>::schema_name()
     }
 

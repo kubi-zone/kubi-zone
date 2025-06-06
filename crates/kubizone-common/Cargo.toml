@@ -13,7 +13,7 @@ license = "MIT"
 readme = "README.md"
 
 [dependencies]
-thiserror = "2.0.12"
+thiserror.workspace = true
 schemars.workspace = true
 serde.workspace = true
 

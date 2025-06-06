@@ -1,10 +1,9 @@
 use std::{
-    borrow::Cow,
     fmt::{Display, Write},
     ops::Add,
 };
 
-use schemars::{JsonSchema, Schema, SchemaGenerator};
+use schemars::{JsonSchema, SchemaGenerator, schema::Schema};
 use serde::{Deserialize, Serialize, de::Error};
 use thiserror::Error;
 
@@ -159,7 +158,7 @@ impl PartialEq<str> for PartiallyQualifiedDomainName {
 }
 
 impl JsonSchema for PartiallyQualifiedDomainName {
-    fn schema_name() -> Cow<'static, str> {
+    fn schema_name() -> String {
         <String as schemars::JsonSchema>::schema_name()
     }
 

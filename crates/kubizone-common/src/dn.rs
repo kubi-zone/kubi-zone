@@ -1,6 +1,6 @@
-use std::{borrow::Cow, fmt::Display};
+use std::fmt::Display;
 
-use schemars::{JsonSchema, Schema, SchemaGenerator};
+use schemars::{JsonSchema, SchemaGenerator, schema::Schema};
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
 
@@ -200,7 +200,7 @@ impl PartialEq<FullyQualifiedDomainName> for DomainName {
 }
 
 impl JsonSchema for DomainName {
-    fn schema_name() -> Cow<'static, str> {
+    fn schema_name() -> String {
         <String as JsonSchema>::schema_name()
     }
 
