@@ -2057,3 +2057,16 @@ name = "zeroize"
 version = "1.8.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ced3678a2879b30306d323f4542626697a464a97c0a07c9aebf7ebca65cd4dde"
+
+[[package]]
+name = "zonefile-crds"
+version = "0.5.0"
+dependencies = [
+ "k8s-openapi",
+ "kube",
+ "kubizone-crds",
+ "schemars",
+ "serde",
+ "serde_json",
+ "serde_yaml_ng",
+]

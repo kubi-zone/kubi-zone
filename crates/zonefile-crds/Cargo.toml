@@ -1,0 +1,36 @@
+[package]
+name = "zonefile-crds"
+version = "0.5.0"
+edition = "2024"
+rust-version = "1.85.1"
+
+authors = ["Mathias Pius Stage <contact@pius.email>"]
+description = "Rust library exposing the Zonefile CRDs as types."
+keywords = ["kubernetes", "kubizone", "crd", "zonefile"]
+
+repository = "https://github.com/kubi-zone/kubi-zone"
+license = "MIT"
+readme = "README.md"
+
+[[example]]
+name = "dump"
+path = "src/dump.rs"
+
+[dependencies]
+kubizone-crds.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+schemars.workspace = true
+kube.workspace = true
+k8s-openapi.workspace = true
+
+[dev-dependencies]
+serde_yaml.workspace = true
+
+[features]
+dev = ["kubizone-crds/dev"]
+latest = ["kubizone-crds/latest"]
+v1_30 = ["kubizone-crds/v1_30"]
+v1_31 = ["kubizone-crds/v1_31"]
+v1_32 = ["kubizone-crds/v1_32"]
+v1_33 = ["kubizone-crds/v1_33"]

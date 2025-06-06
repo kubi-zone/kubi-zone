@@ -1,10 +1,15 @@
 [workspace]
 resolver = "2"
-members = ["crates/kubizone-common", "crates/kubizone-crds"]
+members = [
+    "crates/kubizone-common",
+    "crates/kubizone-crds",
+    "crates/zonefile-crds",
+]
 
 [workspace.dependencies]
 kubizone-common = { version = "0.15.0", path = "crates/kubizone-common" }
 kubizone-crds = { version = "0.14.0", path = "crates/kubizone-crds" }
+zonefile-crds = { version = "0.5.0", path = "crates/kubizone-crds" }
 
 # Logging
 thiserror = "2.0.12"

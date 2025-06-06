@@ -105,8 +105,8 @@ jobs:
       # --feature-powerset runs for every combination of features
       - name: cargo hack
         run: |
-          kubernetes_versions=$(cargo metadata --no-deps | jq -r '[.packages[].features] | add | to_entries | map(select(.value[] | startswith("k8s"))) | map(.key) | join(",")')
-          cargo hack --feature-powerset --mutually-exclusive-features $kubernetes_versions --at-least-one-of $kubernetes_versions check
+          kubernetes_versions=$(cargo metadata --no-deps | jq '[.packages[].features][] | to_entries | map(select(.value[] | startswith("k8s"))) | map(.key)' | jq -rs '. | flatten | join(",")')
+          cargo hack --feature-powerset --exclude-features latest --mutually-exclusive-features "$kubernetes_versions" --at-least-one-of "$kubernetes_versions" check
   msrv:
     # check that we can build using the minimal rust version that is specified by this crate
     runs-on: ubuntu-latest
