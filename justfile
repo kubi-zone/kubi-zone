@@ -19,6 +19,9 @@
     cargo +stable test --locked --all-targets
     cargo +nightly test --locked --all-targets
 
+@fmt:
+    cargo fmt --check
+
 @all:
     just minimal-versions
     just docs-rs
