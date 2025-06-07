@@ -147,7 +147,7 @@ pub enum Type {
     IPSECKEY,
     /// Key record
     ///
-    /// Used only for SIG(0) (RFC 2931) and TKEY (RFC 2930).[5] RFC 3445 eliminated their use for application keys and limited their use to DNSSEC.[6] RFC 3755 designates DNSKEY as the replacement within DNSSEC.[7] RFC 4025 designates IPSECKEY as the replacement for use with IPsec.[8]
+    /// Used only for SIG(0) (RFC 2931) and TKEY (RFC 2930). RFC 3445 eliminated their use for application keys and limited their use to DNSSEC. RFC 3755 designates DNSKEY as the replacement within DNSSEC. RFC 4025 designates IPSECKEY as the replacement for use with IPsec.
     ///
     /// [2535](https://datatracker.ietf.org/doc/html/rfc2535)
     /// [2930](https://datatracker.ietf.org/doc/html/rfc2930)
@@ -227,7 +227,7 @@ pub enum Type {
     RP,
     /// Signature
     ///
-    /// Signature record used in SIG(0) (RFC 2931) and TKEY (RFC 2930).[7] RFC 3755 designated RRSIG as the replacement for SIG for use within DNSSEC.[7]
+    /// Signature record used in SIG(0) (RFC 2931) and TKEY (RFC 2930). RFC 3755 designated RRSIG as the replacement for SIG for use within DNSSEC.
     ///
     /// [2535](https://datatracker.ietf.org/doc/html/rfc2535)
     SIG,
@@ -268,7 +268,7 @@ pub enum Type {
     TA,
     /// Transaction Key record
     ///
-    /// A method of providing keying material to be used with TSIG that is encrypted under the public key in an accompanying KEY RR.[12]
+    /// A method of providing keying material to be used with TSIG that is encrypted under the public key in an accompanying KEY RR.
     ///
     /// [2930](https://datatracker.ietf.org/doc/html/rfc2930)
     TKEY,
@@ -280,7 +280,7 @@ pub enum Type {
     TLSA,
     /// Transaction Signature
     ///
-    /// Can be used to authenticate dynamic updates as coming from an approved client, or to authenticate responses as coming from an approved recursive name server[13] similar to DNSSEC.
+    /// Can be used to authenticate dynamic updates as coming from an approved client, or to authenticate responses as coming from an approved recursive name server similar to DNSSEC.
     ///
     /// [2845](https://datatracker.ietf.org/doc/html/rfc2845)
     TSIG,

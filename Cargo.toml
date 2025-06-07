@@ -7,9 +7,9 @@ members = [
 ]
 
 [workspace.dependencies]
-kubizone-common = { version = "0.15.0", path = "crates/kubizone-common" }
-kubizone-crds = { version = "0.14.0", path = "crates/kubizone-crds" }
-zonefile-crds = { version = "0.5.0", path = "crates/kubizone-crds" }
+kubizone-common = { version = "0.15.0", path = "crates/kubizone-common", default-features = false }
+kubizone-crds = { version = "0.14.0", path = "crates/kubizone-crds", default-features = false }
+zonefile-crds = { version = "0.5.0", path = "crates/kubizone-crds", default-features = false }
 
 # Logging
 thiserror = "2.0.12"

@@ -6,9 +6,6 @@ use thiserror::Error;
 
 use crate::{FullyQualifiedDomainName, segment::DomainSegment};
 
-#[derive(Error, Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
-pub enum PatternError {}
-
 #[derive(Default, Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Pattern(Vec<PatternSegment>);
 

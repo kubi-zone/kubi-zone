@@ -26,10 +26,7 @@ jobs:
     name: stable / fmt
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: true
-      - name: Install stable
-        uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@stable
         with:
           components: rustfmt
       - name: cargo fmt --check
@@ -49,7 +46,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: true
-      - name: Install ${{ matrix.toolchain }}
+      - name: install ${{ matrix.toolchain }}
         uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ matrix.toolchain }}
@@ -64,10 +61,7 @@ jobs:
     name: semver
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: true
-      - name: Install stable
-        uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@stable
         with:
           components: rustfmt
       - name: cargo-semver-checks
@@ -80,14 +74,11 @@ jobs:
     name: nightly / doc
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: true
-      - name: Install nightly
-        uses: dtolnay/rust-toolchain@nightly
-      - name: Install cargo-docs-rs
-        uses: dtolnay/install@cargo-docs-rs
+      - uses: extractions/setup-just@v3
+      - uses: dtolnay/rust-toolchain@nightly
+      - uses: dtolnay/install@cargo-docs-rs
       - name: cargo docs-rs
-        run: cargo metadata --no-deps | jq '.packages[].name' | xargs -n1 cargo docs-rs -p
+        run: just docs-rs
   hack:
     # cargo-hack checks combinations of feature flags to ensure that features are all additive
     # which is required for feature unification
@@ -95,18 +86,11 @@ jobs:
     name: ubuntu / stable / features
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: true
-      - name: Install stable
-        uses: dtolnay/rust-toolchain@stable
-      - name: cargo install cargo-hack
-        uses: taiki-e/install-action@cargo-hack
-      # intentionally no target specifier; see https://github.com/jonhoo/rust-ci-conf/pull/4
-      # --feature-powerset runs for every combination of features
+      - uses: extractions/setup-just@v3
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: taiki-e/install-action@cargo-hack
       - name: cargo hack
-        run: |
-          kubernetes_versions=$(cargo metadata --no-deps | jq '[.packages[].features][] | to_entries | map(select(.value[] | startswith("k8s"))) | map(.key)' | jq -rs '. | flatten | join(",")')
-          cargo hack --feature-powerset --exclude-features latest --mutually-exclusive-features "$kubernetes_versions" --at-least-one-of "$kubernetes_versions" check
+        run: just hack
   msrv:
     # check that we can build using the minimal rust version that is specified by this crate
     runs-on: ubuntu-latest
@@ -114,12 +98,10 @@ jobs:
     # https://docs.github.com/en/actions/learn-github-actions/contexts#context-availability
     strategy:
       matrix:
-        msrv: ["1.85.1"] # 2021 edition requires 1.56
+        msrv: ["1.85.1"] # 2024 edition requires 1.85.1
     name: ubuntu / ${{ matrix.msrv }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: true
       - name: Install ${{ matrix.msrv }}
         uses: dtolnay/rust-toolchain@master
         with:

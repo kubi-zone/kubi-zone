@@ -28,9 +28,14 @@ k8s-openapi.workspace = true
 serde_yaml.workspace = true
 
 [features]
-dev = ["kubizone-crds/dev"]
-latest = ["kubizone-crds/latest"]
+default = ["v1_33"]
 v1_30 = ["kubizone-crds/v1_30"]
 v1_31 = ["kubizone-crds/v1_31"]
 v1_32 = ["kubizone-crds/v1_32"]
 v1_33 = ["kubizone-crds/v1_33"]
+
+# When enabled, the custom resource definitions will be placed in the dev.kubi.zone
+# group, instead of the actual kubi.zone group. This way you can have the production
+# and dev versions of kubizone resources running side by side, without interfering
+# with each other.
+dev = ["kubizone-crds/dev"]
