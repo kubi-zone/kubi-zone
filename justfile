@@ -1,18 +1,18 @@
-@minimal-versions:
+@minimal:
     cargo +nightly update -Zdirect-minimal-versions
     cargo test --locked --all-targets
     cargo update
 
-@dump-crds version="default":
-    cargo metadata --format-version 1 --no-deps | jq -r '.packages[] | select(.name | endswith("-crds")) | .name' \
-    | xargs -n1 cargo run --no-default-features --features {{ version }} --example dump -p
+@crd version="default":
+    cargo run -p crd-exporter --no-default-features --features {{ version }}
+    git diff --quiet -- crds/
 
 @hack:
     #!/usr/bin/env bash
     kubernetes_versions=$(cargo metadata --no-deps | jq '[.packages[].features][] | to_entries | map(select(.value[] | startswith("k8s"))) | map(.key)' | jq -rs '. | flatten | join(",")')
     cargo hack --feature-powerset --exclude-features default --mutually-exclusive-features "$kubernetes_versions" --at-least-one-of "$kubernetes_versions" check
 
-@docs-rs:
+@docs:
     cargo metadata --format-version 1 --no-deps | jq '.packages[].name' | xargs -n1 cargo +nightly docs-rs -p
 
 @test:
@@ -22,8 +22,14 @@
 @fmt:
     cargo fmt --check
 
+@semver:
+    cargo semver-checks --default-features
+
 @all:
-    just minimal-versions
-    just docs-rs
-    just hack
+    just fmt
+    just crd
     just test
+    just docs
+    just hack
+    just minimal
+    just semver

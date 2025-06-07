@@ -1,0 +1,27 @@
+[package]
+name = "crd-exporter"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85.1"
+
+license = "MIT"
+publish = false
+
+[dependencies]
+kubizone-crds.workspace = true
+zonefile-crds.workspace = true
+serde_yaml.workspace = true
+kube.workspace = true
+regex.workspace = true
+
+[features]
+default = ["v1_33"]
+v1_30 = ["kubizone-crds/v1_30", "zonefile-crds/v1_30"]
+v1_31 = ["kubizone-crds/v1_31", "zonefile-crds/v1_31"]
+v1_32 = ["kubizone-crds/v1_32", "zonefile-crds/v1_32"]
+v1_33 = ["kubizone-crds/v1_33", "zonefile-crds/v1_33"]
+# When enabled, the custom resource definitions will be placed in the dev.kubi.zone
+# group, instead of the actual kubi.zone group. This way you can have the production
+# and dev versions of kubizone resources running side by side, without interfering
+# with each other.
+dev = ["kubizone-crds/dev", "zonefile-crds/dev"]

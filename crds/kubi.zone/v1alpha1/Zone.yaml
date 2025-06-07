@@ -37,7 +37,7 @@ spec:
           spec:
             properties:
               delegations:
-                description: List of namespaced records and zones which are allowed to "insert" themselves into this zone. See the [`Delegation`] type for more information.
+                description: List of namespaced records and zones which are allowed to "insert" themselves into this zone. See the Delegation type for more information.
                 items:
                   properties:
                     namespaces:

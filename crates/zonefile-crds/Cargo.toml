@@ -12,10 +12,6 @@ repository = "https://github.com/kubi-zone/kubi-zone"
 license = "MIT"
 readme = "README.md"
 
-[[example]]
-name = "dump"
-path = "src/dump.rs"
-
 [dependencies]
 kubizone-crds.workspace = true
 serde.workspace = true
@@ -23,9 +19,6 @@ serde_json.workspace = true
 schemars.workspace = true
 kube.workspace = true
 k8s-openapi.workspace = true
-
-[dev-dependencies]
-serde_yaml.workspace = true
 
 [features]
 default = ["v1_33"]
