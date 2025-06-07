@@ -1,0 +1,43 @@
+[package]
+name = "kubizone-crds"
+version = "0.14.0"
+edition = "2024"
+rust-version = "1.85.1"
+
+authors = ["Mathias Pius Stage <contact@pius.email>"]
+description = "Rust library exposing the Kubizone CRDs as types."
+keywords = ["kubernetes", "kubizone", "crd"]
+
+repository = "https://github.com/kubi-zone/kubi-zone"
+license = "MIT"
+readme = "README.md"
+
+[[example]]
+name = "dump"
+path = "src/dump.rs"
+
+[dependencies]
+kubizone-common.workspace = true
+
+tracing.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+schemars.workspace = true
+kube.workspace = true
+k8s-openapi.workspace = true
+
+[dev-dependencies]
+tracing-subscriber.workspace = true
+serde_yaml.workspace = true
+
+[features]
+default = ["v1_33"]
+v1_30 = ["k8s-openapi/v1_30"]
+v1_31 = ["k8s-openapi/v1_31"]
+v1_32 = ["k8s-openapi/v1_32"]
+v1_33 = ["k8s-openapi/v1_33"]
+# When enabled, the custom resource definitions will be placed in the dev.kubi.zone
+# group, instead of the actual kubi.zone group. This way you can have the production
+# and dev versions of kubizone resources running side by side, without interfering
+# with each other.
+dev = []
