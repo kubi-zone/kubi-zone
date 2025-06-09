@@ -1,0 +1,67 @@
+[package]
+name = "kubizone"
+version = "0.4.1"
+edition = "2024"
+rust-version = "1.85.1"
+
+authors = ["Mathias Pius Stage <contact@pius.email>"]
+description = "Kubizone Controller"
+keywords = ["kubernetes", "kubizone", "dns"]
+
+repository = "https://github.com/kubi-zone/kubi-zone"
+license = "MIT"
+publish = false
+readme = "README.md"
+
+[[bin]]
+name = "kubizone"
+path = "src/main.rs"
+
+[dependencies]
+# Logging
+tracing.workspace = true
+tracing-subscriber.workspace = true
+
+# Utilities
+time.workspace = true
+
+# Kubernetes
+kubizone-crds.workspace = true
+kubizone-common.workspace = true
+kube = { workspace = true, default-features = false, features = [
+    "derive",
+    "rustls-tls",
+    "client",
+    "runtime",
+    "jsonpatch",
+] }
+k8s-openapi.workspace = true
+json-patch.workspace = true
+jsonptr.workspace = true
+
+# Async
+tokio = { workspace = true, features = ["macros", "rt"] }
+futures.workspace = true
+
+# CLI
+clap = { workspace = true, features = ["derive", "env"] }
+
+[dev-dependencies]
+tracing-subscriber.workspace = true
+indoc.workspace = true
+serde_yaml.workspace = true
+serial_test.workspace = true
+
+[features]
+default = ["v1_33"]
+# k8s-openapi equivalents are enabled transitively.
+v1_30 = ["kubizone-crds/v1_30"]
+v1_31 = ["kubizone-crds/v1_31"]
+v1_32 = ["kubizone-crds/v1_32"]
+v1_33 = ["kubizone-crds/v1_33"]
+
+# When enabled, the custom resource definitions will be placed in the dev.kubi.zone
+# group, instead of the actual kubi.zone group. This way you can have the production
+# and dev versions of kubizone resources running side by side, without interfering
+# with each other.
+dev = ["kubizone-crds/dev"]

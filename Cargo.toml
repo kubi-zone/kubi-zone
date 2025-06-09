@@ -5,6 +5,7 @@ members = [
     "crates/kubizone-crds",
     "crates/zonefile-crds",
     "crates/crd-exporter",
+    "controllers/kubizone",
 ]
 
 [workspace.dependencies]
@@ -23,12 +24,21 @@ serde = { version = "1.0.219", features = ["derive"] }
 serde_yaml = { package = "serde_yaml_ng", version = "0.10.0" }
 serde_json = { version = "1.0.140" }
 regex = { version = "1.11.1" }
+json-patch = { version = "4.0.0" }
+jsonptr = { version = "0.7.1" }
 
 # Kubernetes
-kube = { version = "1.1.0", default-features = false, features = [
-    "derive",
-    "rustls-tls",
-    "client",
-    "runtime",
-] }
-k8s-openapi = { version = "0.25.0" }
+kube = { version = "1.1.0", default-features = false }
+k8s-openapi = { version = "0.25.0", default-features = false }
+
+# Async
+tokio = { version = "1.45.1", features = ["macros", "rt"] }
+futures = "0.3.31"
+
+# CLI
+clap = { version = "4.4" }
+
+# Utilities
+time = "0.3.41"
+indoc = "2.0.5"
+serial_test = "3.1.1"

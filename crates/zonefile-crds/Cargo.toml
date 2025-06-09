@@ -17,11 +17,12 @@ kubizone-crds.workspace = true
 serde.workspace = true
 serde_json.workspace = true
 schemars.workspace = true
-kube.workspace = true
+kube = { workspace = true, features = ["derive"] }
 k8s-openapi.workspace = true
 
 [features]
 default = ["v1_33"]
+# k8s-openapi equivalents are enabled transitively.
 v1_30 = ["kubizone-crds/v1_30"]
 v1_31 = ["kubizone-crds/v1_31"]
 v1_32 = ["kubizone-crds/v1_32"]

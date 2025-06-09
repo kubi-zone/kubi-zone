@@ -28,6 +28,9 @@
 @publish:
     cargo metadata --format-version 1 --no-deps | jq '.packages[] | select(.targets[].kind | contains(["lib"])) | .name' | xargs -n1 cargo publish --dry-run -p
 
+@build controller="kubizone" tag="dev":
+    docker build --target {{ controller }} -t ghcr.io/kubi-zone/{{ controller }}:{{ tag }} .
+
 @all:
     just fmt
     just crd
@@ -36,3 +39,4 @@
     just hack
     just minimal
     just semver
+    just build

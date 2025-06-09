@@ -19,8 +19,8 @@ tracing.workspace = true
 serde.workspace = true
 serde_json.workspace = true
 schemars.workspace = true
-kube.workspace = true
 k8s-openapi.workspace = true
+kube = { workspace = true, features = ["derive"] }
 
 [dev-dependencies]
 tracing-subscriber.workspace = true
